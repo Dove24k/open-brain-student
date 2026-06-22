@@ -471,9 +471,20 @@ transcript.”</p>
             if (typeof window[name] === "string" && window[name].trim()) {
               return window[name].trim();
             }
+
+            try {
+              const value = eval(name);
+              if (typeof value === "string" && value.trim()) {
+                return value.trim();
+              }
+            } catch {
+              // This setting name does not exist. Try the next one.
+            }
           }
+
           return "";
         }
+
 
         function setupSupabase() {
           const url = getSupabaseSetting([
